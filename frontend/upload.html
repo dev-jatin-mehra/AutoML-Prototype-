@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Upload Dataset - AutoML Project</title>
+    <link rel="stylesheet" href="css/upload.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Orbitron:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/webp" href="assets/favicon/favicon.webp" />
+  </head>
+  <body>
+    <div class="background-animation"></div>
+
+    <header>
+      <nav class="navbar">
+        <div class="logo">AutoML<span class="logo-accent">AI</span></div>
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="#results">Results</a></li>
+        </ul>
+        <div class="burger">
+          <div class="line1"></div>
+          <div class="line2"></div>
+          <div class="line3"></div>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <section class="upload-section">
+        <h1>Upload Your Dataset</h1>
+        <div class="upload-container">
+          <div class="upload-area" id="dropZone">
+            <i class="fas fa-cloud-upload-alt"></i>
+            <p>Drag and drop your file here or click to select</p>
+            <input
+              type="file"
+              id="fileInput"
+              accept=".csv, .json, .sql"
+              hidden
+            />
+          </div>
+          <button class="btn btn-primary" id="uploadBtn">Upload Dataset</button>
+        </div>
+        <div class="upload-info">
+          <h3>Supported Formats:</h3>
+          <ul>
+            <li>CSV</li>
+            <li>JSON</li>
+            <li>SQL Database</li>
+          </ul>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-content">
+        <div class="footer-links">
+          <a href="#">Terms of Service</a>
+          <a href="#">Privacy Policy</a>
+          <a href="about.html#contact">Contact Support</a>
+        </div>
+        <div class="social-links">
+          <a href="#" target="_blank"><i class="fab fa-github"></i></a>
+          <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
+          <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+          <a href="mailto:admin@automl.com"><i class="fas fa-envelope"></i></a>
+        </div>
+        <p>
+          &copy; 2025 AutoML<span class="footer-accent">AI</span> Project. All
+          rights reserved.
+        </p>
+      </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollTrigger.min.js"></script>
+    <script src="src/upload.js" defer></script>
+  </body>
+</html>
