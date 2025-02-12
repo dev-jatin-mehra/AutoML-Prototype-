@@ -35,18 +35,6 @@ document.addEventListener("DOMContentLoaded", () => {
         },
       });
 
-      gsap.from(".creator-section", {
-        opacity: 0,
-        y: 50,
-        duration: 1,
-        scrollTrigger: {
-          trigger: ".creator-section",
-          start: "top 80%",
-          end: "bottom 20%",
-          toggleActions: "play none none reverse",
-        },
-      });
-
       // Animate content elements
       gsap.from(
         ".about-content h2, .about-content h3, .about-content p, .about-content ul, .about-content ol",
@@ -104,7 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       // Animate contributors
-      gsap.from(".contributor", {
+      gsap.from(".contributors", {
         opacity: 0,
         scale: 0.8,
         duration: 0.5,

@@ -110,16 +110,14 @@ main {
   flex-grow: 1;
 }
 
-.about-section,
-.creator-section {
+.about-section {
   background-color: rgba(26, 26, 26, 0.6);
   color: #ffffff;
   padding: 4rem 2rem;
   margin-bottom: 2rem;
 }
 
-.about-section h1,
-.creator-section h2 {
+.about-section h1 {
   font-size: 2.5rem;
   margin-bottom: 2rem;
   font-family: "Orbitron", sans-serif;
@@ -159,8 +157,6 @@ main {
   padding-left: 2rem;
   margin-bottom: 1rem;
 }
-
-/* Previous styles remain the same */
 
 /* Team section styles */
 .team-section {
