@@ -101,31 +101,31 @@ document.addEventListener("DOMContentLoaded", () => {
     // Display model info
     modelInfo.innerHTML = `
       <h3>Model Information</h3>
-      <p>Model Type: ${data.model_type}</p>
-      <p>Training Time: ${data.training_time.toFixed(2)} seconds</p>
+      <p>Model Type: ${data.model_name}</p>
+      <p>Training Time: ${data.time_taken.toFixed(2)} seconds</p>
     `;
 
     // Display model metrics
     modelMetrics.innerHTML = `
       <h3>Model Metrics</h3>
-      <p>Accuracy: ${data.accuracy.toFixed(4)}</p>
-      <p>Precision: ${data.precision.toFixed(4)}</p>
-      <p>Recall: ${data.recall.toFixed(4)}</p>
-      <p>F1 Score: ${data.f1_score.toFixed(4)}</p>
-    `;
+      <p>Accuracy: ${data.accuracy.toFixed(4)}</p> `;
+    // <p>Precision: ${data.precision.toFixed(4)}</p>
+    // <p>Recall: ${data.recall.toFixed(4)}</p>
+    // <p>F1 Score: ${data.f1_score.toFixed(4)}</p>
+    // `;
 
     // Display feature importance
-    featureImportance.innerHTML = `
-      <h3>Feature Importance</h3>
-      <ul>
-        ${Object.entries(data.feature_importance)
-          .map(
-            ([feature, importance]) =>
-              `<li>${feature}: ${importance.toFixed(4)}</li>`
-          )
-          .join("")}
-      </ul>
-    `;
+    // featureImportance.innerHTML = `
+    //   <h3>Feature Importance</h3>
+    //   <ul>
+    //     ${Object.entries(data.feature_importance)
+    //       .map(
+    //         ([feature, importance]) =>
+    //           `<li>${feature}: ${importance.toFixed(4)}</li>`
+    //       )
+    //       .join("")}
+    //   </ul>
+    // `;
 
     // Show the results card
     resultsCard.style.display = "block";

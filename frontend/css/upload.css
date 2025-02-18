@@ -327,15 +327,17 @@ footer {
   color: #00ffff;
 }
 
-.results-content p,
-.results-content li {
+.results-content p {
   margin-bottom: 0.5rem;
 }
+/* .results-content li {
+  margin-bottom: 0.5rem;
+} */
 
-.results-content ul {
+/* .results-content ul {
   list-style-type: none;
   padding-left: 0;
-}
+} */
 
 @media screen and (max-width: 768px) {
   .results-content {
