@@ -1,160 +1,122 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // Navbar functionality
-  const burger = document.querySelector(".burger");
-  const nav = document.querySelector(".nav-links");
-  const navLinks = document.querySelectorAll(".nav-links li");
-
-  burger.addEventListener("click", () => {
-    nav.classList.toggle("nav-active");
-    burger.classList.toggle("toggle");
-
-    navLinks.forEach((link, index) => {
-      if (link.style.animation) {
-        link.style.animation = "";
-      } else {
-        link.style.animation = `navLinkFade 0.5s ease forwards ${
-          index / 7 + 0.3
-        }s`;
-      }
-    });
-  });
-
-  // File upload functionality
   const dropZone = document.getElementById("dropZone");
   const fileInput = document.getElementById("fileInput");
   const uploadBtn = document.getElementById("uploadBtn");
+  const uploadForm = document.getElementById("uploadForm");
 
+  // Navbar Toggle
+  document.querySelector(".burger").addEventListener("click", () => {
+    document.querySelector(".nav-links").classList.toggle("nav-active");
+    document.querySelector(".burger").classList.toggle("toggle");
+  });
+
+  // Click to open file dialog
   dropZone.addEventListener("click", () => fileInput.click());
 
-  dropZone.addEventListener("dragover", (e) => {
-    e.preventDefault();
-    dropZone.classList.add("dragover");
-  });
+  // Drag & Drop Functionality
+  ["dragover", "dragenter"].forEach(event =>
+    dropZone.addEventListener(event, (e) => {
+      e.preventDefault();
+      dropZone.classList.add("dragover");
+    })
+  );
 
-  dropZone.addEventListener("dragleave", () => {
-    dropZone.classList.remove("dragover");
-  });
-
-  dropZone.addEventListener("drop", (e) => {
-    e.preventDefault();
-    dropZone.classList.remove("dragover");
-    fileInput.files = e.dataTransfer.files;
-    updateFileName();
-  });
+  ["dragleave", "drop"].forEach(event =>
+    dropZone.addEventListener(event, (e) => {
+      e.preventDefault();
+      dropZone.classList.remove("dragover");
+      if (e.type === "drop") {
+        fileInput.files = e.dataTransfer.files;
+        updateFileName();
+      }
+    })
+  );
 
   fileInput.addEventListener("change", updateFileName);
 
   function updateFileName() {
-    const fileName = fileInput.files[0]
+    dropZone.querySelector("p").textContent = fileInput.files[0]
       ? fileInput.files[0].name
-      : "No file selected";
-    dropZone.querySelector("p").textContent = fileName;
+      : "Drag and drop your file here or click to select";
   }
 
-  uploadBtn.addEventListener("click", () => {
-    try {
-      if (fileInput.files.length > 0) {
-        const file = fileInput.files[0];
-        const formData = new FormData();
-        formData.append("file", file);
-
-        console.log("Uploading file:", file.name);
-
-        // Show loading indicator
-        uploadBtn.textContent = "Uploading...";
-        uploadBtn.disabled = true;
-
-        // Sending file to the server
-        fetch("http://localhost:5000/train", {
-          method: "POST",
-          body: formData,
-        })
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            return response.json();
-          })
-          .then((data) => {
-            console.log("API Response:", data);
-            displayResults(data);
-          })
-          .catch((error) => {
-            console.error("Error:", error);
-            alert("Error uploading file. Please try again.");
-          })
-          .finally(() => {
-            // Reset button state
-            uploadBtn.textContent = "Upload Dataset";
-            uploadBtn.disabled = false;
-          });
-      }
-    } catch (err) {
-      console.log(err);
-    }
+  uploadForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    await handleFileUpload();
   });
+
+  async function handleFileUpload() {
+    if (fileInput.files.length === 0) {
+      alert("Please select a file to upload.");
+      return;
+    }
+
+    uploadBtn.disabled = true;
+    uploadBtn.textContent = "Uploading...";
+
+    try {
+      const formData = new FormData();
+      formData.append("file", fileInput.files[0]);
+
+      const response = await fetch("http://localhost:5000/train", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+
+      const data = await response.json();
+      console.log("Upload Success:", data);
+      displayResults(data);
+    } catch (error) {
+      console.error("Upload Error:", error);
+      alert("File upload failed. Please try again.");
+    } finally {
+      uploadBtn.disabled = false;
+      uploadBtn.textContent = "Upload Dataset";
+    }
+  }
 
   function displayResults(data) {
     const resultsCard = document.getElementById("resultsCard");
     const modelInfo = document.getElementById("modelInfo");
     const modelMetrics = document.getElementById("modelMetrics");
-    const featureImportance = document.getElementById("featureImportance");
+
+    console.log("API Response:", data); // Debugging: Check response format
+
+    // Ensure the response contains expected properties
+    const modelName = data.model_name || "Unknown Model";
+    const trainingTime = data.time_taken ? data.time_taken.toFixed(2) : "N/A";
+    const accuracy = data.performance_metrics.accuracy ? data.performance_metrics.accuracy.toFixed(4) : "N/A";
 
     // Display model info
     modelInfo.innerHTML = `
-      <h3>Model Information</h3>
-      <p>Model Type: ${data.model_name}</p>
-      <p>Training Time: ${data.time_taken.toFixed(2)} seconds</p>
-    `;
+    <h3>Model Information</h3>
+    <p>Model Type: ${modelName}</p>
+    <p>Training Time: ${trainingTime} seconds</p>
+  `;
 
     // Display model metrics
     modelMetrics.innerHTML = `
-      <h3>Model Metrics</h3>
-      <p>Accuracy: ${data.accuracy.toFixed(4)}</p> `;
-    // <p>Precision: ${data.precision.toFixed(4)}</p>
-    // <p>Recall: ${data.recall.toFixed(4)}</p>
-    // <p>F1 Score: ${data.f1_score.toFixed(4)}</p>
-    // `;
-
-    // Display feature importance
-    // featureImportance.innerHTML = `
-    //   <h3>Feature Importance</h3>
-    //   <ul>
-    //     ${Object.entries(data.feature_importance)
-    //       .map(
-    //         ([feature, importance]) =>
-    //           `<li>${feature}: ${importance.toFixed(4)}</li>`
-    //       )
-    //       .join("")}
-    //   </ul>
-    // `;
+    <h3>Model Metrics</h3>
+    <p>Accuracy: ${accuracy}</p>
+  `;
 
     // Show the results card
     resultsCard.style.display = "block";
-
-    // Scroll to results
     resultsCard.scrollIntoView({ behavior: "smooth" });
   }
 
-  // GSAP animations
+
+  // GSAP Animations
   gsap.registerPlugin(ScrollTrigger);
 
   gsap.from(".upload-section", {
     opacity: 0,
     y: 50,
     duration: 1,
-    scrollTrigger: {
-      trigger: ".upload-section",
-      start: "top 80%",
-      end: "bottom 20%",
-      toggleActions: "play none none reverse",
-    },
+    scrollTrigger: { trigger: ".upload-section", start: "top 80%", end: "bottom 20%", toggleActions: "play none none reverse" },
   });
 
-  gsap.from(".upload-container", {
-    opacity: 0,
-    scale: 0.8,
-    duration: 0.5,
-    delay: 0.5,
-  });
+  gsap.from(".upload-container", { opacity: 0, scale: 0.8, duration: 0.5, delay: 0.5 });
 });

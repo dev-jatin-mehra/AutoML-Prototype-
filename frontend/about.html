@@ -14,7 +14,9 @@
       rel="stylesheet"
     />
     <link rel="icon" type="image/webp" href="assets/favicon/favicon.webp" />
+    <script src="src/loading.js" defer></script>
   </head>
+
   <body>
     <div class="background-animation"></div>
 
@@ -33,6 +35,9 @@
         </div>
       </nav>
     </header>
+
+    <!-- Dynamic Header -->
+    <div id="header-container"></div>
 
     <main>
       <section class="about-section">
@@ -201,25 +206,8 @@
       </section>
     </main>
 
-    <footer>
-      <div class="footer-content">
-        <div class="footer-links">
-          <a href="#">Terms of Service</a>
-          <a href="#">Privacy Policy</a>
-          <a href="#contact">Contact Support</a>
-        </div>
-        <div class="social-links">
-          <a href="#" target="_blank"><i class="fab fa-github"></i></a>
-          <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
-          <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
-          <a href="mailto:jatin@automl.ai"><i class="fas fa-envelope"></i></a>
-        </div>
-        <p>
-          &copy; 2025 AutoML<span class="footer-accent">AI</span> Project. All
-          rights reserved.
-        </p>
-      </div>
-    </footer>
+    <!-- Dynamic Footer -->
+    <div id="footer-container"></div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollTrigger.min.js"></script>

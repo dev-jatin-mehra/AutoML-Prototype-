@@ -13,26 +13,15 @@
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Orbitron:wght@400;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="icon" type="image/webp" href="assets/favicon/favicon.webp">
+    <link rel="icon" type="image/webp" href="assets/favicon/favicon.webp" />
+    <script src="src/loading.js" defer></script>
   </head>
+
   <body>
     <div class="background-animation"></div>
 
-    <header>
-      <nav class="navbar">
-        <div class="logo">AutoML<span class="logo-accent">AI</span></div>
-        <ul class="nav-links">
-          <li><a href="upload.html">Upload Dataset</a></li>
-          <li><a href="about.html">About</a></li>
-          <li><a href="about.html#contact">Contact</a></li>
-        </ul>
-        <div class="burger">
-          <div class="line1"></div>
-          <div class="line2"></div>
-          <div class="line3"></div>
-        </div>
-      </nav>
-    </header>
+    <!-- Dynamic Header -->
+    <div id="header-container"></div>
 
     <main>
       <section class="hero">
@@ -152,7 +141,7 @@
       </section>
     </main>
 
-    <footer>
+    <!-- <footer>
       <div class="footer-content">
         <div class="footer-links">
           <a href="#">Terms of Service</a>
@@ -170,7 +159,10 @@
           rights reserved.
         </p>
       </div>
-    </footer>
+    </footer> -->
+
+    <!-- Dynamic Footer -->
+    <div id="footer-container"></div>
   </body>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollTrigger.min.js"></script>
