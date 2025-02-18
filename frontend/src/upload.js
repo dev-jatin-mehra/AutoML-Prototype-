@@ -52,43 +52,45 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   uploadBtn.addEventListener("click", () => {
-    if (fileInput.files.length > 0) {
-      const file = fileInput.files[0];
-      const formData = new FormData();
-      formData.append("file", file);
+    try {
+      if (fileInput.files.length > 0) {
+        const file = fileInput.files[0];
+        const formData = new FormData();
+        formData.append("file", file);
 
-      console.log("Uploading file:", file.name);
+        console.log("Uploading file:", file.name);
 
-      // Show loading indicator
-      uploadBtn.textContent = "Uploading...";
-      uploadBtn.disabled = true;
+        // Show loading indicator
+        uploadBtn.textContent = "Uploading...";
+        uploadBtn.disabled = true;
 
-      // Sending file to the server
-      fetch("http://localhost:5000/train", {
-        method: "POST",
-        body: formData,
-      })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-          }
-          return response.json();
+        // Sending file to the server
+        fetch("http://localhost:5000/train", {
+          method: "POST",
+          body: formData,
         })
-        .then((data) => {
-          console.log("API Response:", data);
-          displayResults(data);
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-          alert("Error uploading file. Please try again.");
-        })
-        .finally(() => {
-          // Reset button state
-          uploadBtn.textContent = "Upload Dataset";
-          uploadBtn.disabled = false;
-        });
-    } else {
-      alert("Please select a file to upload");
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+          })
+          .then((data) => {
+            console.log("API Response:", data);
+            displayResults(data);
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+            alert("Error uploading file. Please try again.");
+          })
+          .finally(() => {
+            // Reset button state
+            uploadBtn.textContent = "Upload Dataset";
+            uploadBtn.disabled = false;
+          });
+      }
+    } catch (err) {
+      console.log(err);
     }
   });
 
