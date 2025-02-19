@@ -14,14 +14,14 @@ document.addEventListener("DOMContentLoaded", () => {
   dropZone.addEventListener("click", () => fileInput.click());
 
   // Drag & Drop Functionality
-  ["dragover", "dragenter"].forEach(event =>
+  ["dragover", "dragenter"].forEach((event) =>
     dropZone.addEventListener(event, (e) => {
       e.preventDefault();
       dropZone.classList.add("dragover");
     })
   );
 
-  ["dragleave", "drop"].forEach(event =>
+  ["dragleave", "drop"].forEach((event) =>
     dropZone.addEventListener(event, (e) => {
       e.preventDefault();
       dropZone.classList.remove("dragover");
@@ -58,12 +58,13 @@ document.addEventListener("DOMContentLoaded", () => {
       const formData = new FormData();
       formData.append("file", fileInput.files[0]);
 
-      const response = await fetch("http://localhost:5000/train", {
+      const response = await fetch("https://automl-kyxw.onrender.com/train", {
         method: "POST",
         body: formData,
       });
 
-      if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+      if (!response.ok)
+        throw new Error(`HTTP error! Status: ${response.status}`);
 
       const data = await response.json();
       console.log("Upload Success:", data);
@@ -87,7 +88,9 @@ document.addEventListener("DOMContentLoaded", () => {
     // Ensure the response contains expected properties
     const modelName = data.model_name || "Unknown Model";
     const trainingTime = data.time_taken ? data.time_taken.toFixed(2) : "N/A";
-    const accuracy = data.performance_metrics.accuracy ? data.performance_metrics.accuracy.toFixed(4) : "N/A";
+    const accuracy = data.performance_metrics.accuracy
+      ? data.performance_metrics.accuracy.toFixed(4)
+      : "N/A";
 
     // Display model info
     modelInfo.innerHTML = `
@@ -107,7 +110,6 @@ document.addEventListener("DOMContentLoaded", () => {
     resultsCard.scrollIntoView({ behavior: "smooth" });
   }
 
-
   // GSAP Animations
   gsap.registerPlugin(ScrollTrigger);
 
@@ -115,8 +117,18 @@ document.addEventListener("DOMContentLoaded", () => {
     opacity: 0,
     y: 50,
     duration: 1,
-    scrollTrigger: { trigger: ".upload-section", start: "top 80%", end: "bottom 20%", toggleActions: "play none none reverse" },
+    scrollTrigger: {
+      trigger: ".upload-section",
+      start: "top 80%",
+      end: "bottom 20%",
+      toggleActions: "play none none reverse",
+    },
   });
 
-  gsap.from(".upload-container", { opacity: 0, scale: 0.8, duration: 0.5, delay: 0.5 });
+  gsap.from(".upload-container", {
+    opacity: 0,
+    scale: 0.8,
+    duration: 0.5,
+    delay: 0.5,
+  });
 });
