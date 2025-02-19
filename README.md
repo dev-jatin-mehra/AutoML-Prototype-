@@ -130,6 +130,7 @@ curl -X POST -F "file=@path/to/dataset.csv" http://localhost:5000/train
 
 - Add support for deep learning models.
 - Implement more backend & frontend features.
+- Implement database for user-level file handling.
 - Implement real-time prediction API.
 - Enable dataset visualization.
 
